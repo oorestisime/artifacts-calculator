@@ -13,7 +13,7 @@ const artifactsLevels = [
 ];
 
 const artifactsStars = {
-  rate: [25, 50, 100, 150, 250, 750],
+  rare: [25, 50, 100, 150, 250, 750],
   epic: [35, 70, 140, 210, 350, 1050],
   legendary: [50, 100, 200, 300, 500, 1500],
 };
@@ -52,6 +52,7 @@ export const resetFilters = {
 };
 
 export const artifactStarUpgrade = (artifactType, artifactLevel, upgrades) => {
+  console.log(artifactType, artifactLevel);
   const stars = artifactsStars[artifactType][artifactLevel - 1];
   const value = totalUpgradeValue(upgrades);
   return value / stars;

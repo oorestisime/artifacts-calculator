@@ -73,19 +73,16 @@ const Filters = ({ filters, setFilters, activeTab, setResult }) => {
         <div className="md:grid md:grid-cols-3 md:gap-6">
           <div className="md:col-span-1">
             <div className="px-4 sm:px-0">
-              <h3 className="text-lg font-medium leading-6 text-gray-900">
+              <h2 className="text-3xl font-bold tracking-tight text-gray-900">
                 Artifact Upgrade
-              </h3>
-              <p className="mt-1 text-sm text-gray-600">
+              </h2>
+
+              <p className="mt-4 text-lg text-gray-500">
                 Fill the information about the stats you will gain from artifact
                 upgrade
               </p>
-              <p className="mt-1 text-sm text-gray-600">
+              <p className="mt-4 text-lg text-gray-500">
                 Use , for decimals not .
-              </p>
-              <p className="mt-1 text-sm text-gray-600">
-                Consider ATK, Leader ATK and Fury ATK the same. Just calculate
-                total ATK, HP, DEF
               </p>
             </div>
           </div>
@@ -155,9 +152,9 @@ const Filters = ({ filters, setFilters, activeTab, setResult }) => {
                       name="artifactType"
                       className="mt-1 block w-full rounded-md border border-gray-300 bg-white py-2 px-3 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
                     >
-                      <option value="epic">Epic</option>
-                      <option value="rare">Rare</option>
-                      <option value="legendary">Legendary</option>
+                      <option value="rare">Rare (blue)</option>
+                      <option value="epic">Epic (purple)</option>
+                      <option value="legendary">Legendary (gold)</option>
                     </select>
                   </div>
                   <div className="col-span-4 sm:col-span-3">
@@ -377,8 +374,24 @@ const Filters = ({ filters, setFilters, activeTab, setResult }) => {
                 </div>
               </div>
               <div className="bg-gray-50 px-4 py-3 text-right sm:px-6">
+                {isButtonDisabled && (
+                  <span className="text-slate-600 mr-4">
+                    Pick at least one upgrade!
+                  </span>
+                )}
+                {!isButtonDisabled && (
+                  <button
+                    disabled={isButtonDisabled}
+                    onClick={() => {
+                      setResult(0);
+                      setFilters(resetFilters);
+                    }}
+                    className={`inline-flex justify-center rounded-md border border-transparent px-4 mx-2 text-base font-medium text-sky-600 hover:bg-sky-50`}
+                  >
+                    Reset
+                  </button>
+                )}
                 <button
-                  type="submit"
                   disabled={isButtonDisabled}
                   onClick={() =>
                     setResult(
@@ -406,15 +419,14 @@ const Results = ({ result, activeTab }) => {
       <div className="md:grid md:grid-cols-3 md:gap-6">
         <div className="md:col-span-1">
           <div className="px-4 sm:px-0">
-            <h3 className="text-lg font-medium leading-6 text-gray-900">
+            <h2 className="text-3xl font-bold tracking-tight text-gray-900">
               {`Value per ${activeTab === "levels" ? "book" : "brush"}`}
-            </h3>
-            <p className="mt-1 text-sm text-gray-600">
+            </h2>
+
+            <p className="mt-4 text-lg text-gray-500">
               Books are converted to green to calculate the upgrade value
             </p>
-            <p className="mt-1 text-sm text-gray-600">HP is / 3 of ATK</p>
-            <p className="mt-1 text-sm text-gray-600">DEF is / 5 of ATK</p>
-            <p className="mt-1 text-sm text-gray-600">
+            <p className="mt-4 text-lg text-gray-500">
               Doesn't take into account training speed or travel speed or other
               upgrades
             </p>
@@ -495,6 +507,57 @@ const Footer = () => {
   );
 };
 
+const faqs = [
+  {
+    question: "How does this work?",
+    answer:
+      "Pick your artifact type and level or star you want to improve. Fill the form with the difference % of each stat you will improve and calculate the value!",
+  },
+  {
+    question: "So what is better?",
+    answer:
+      "Higher value means the upgrade will get you a better value for money!",
+  },
+  {
+    question: "Where is Leader ATK, or Fury ATK?",
+    answer:
+      "Just use the default ATK or HP or DEF value. Even it there's a slight difference for traps etc.",
+  },
+  {
+    question: "How do you compare HP, DEF and ATK?",
+    answer: "HP is / 3 of ATK. DEF is / 5 of ATK",
+  },
+];
+
+const Instructions = () => {
+  return (
+    <div className="mx-auto py-8">
+      <div className="lg:grid lg:grid-cols-3 lg:gap-8">
+        <div>
+          <h2 className="text-3xl font-bold tracking-tight text-gray-900">
+            Frequently asked questions
+          </h2>
+          <p className="mt-4 text-lg text-gray-500">
+            {`Can't find the answer you're looking for? That's unfortunate!`}
+          </p>
+        </div>
+        <div className="mt-12 lg:col-span-2 lg:mt-0">
+          <dl className="space-y-12">
+            {faqs.map((faq) => (
+              <div key={faq.question}>
+                <dt className="text-lg font-medium leading-6 text-gray-900">
+                  {faq.question}
+                </dt>
+                <dd className="mt-2 text-base text-gray-500">{faq.answer}</dd>
+              </div>
+            ))}
+          </dl>
+        </div>
+      </div>
+    </div>
+  );
+};
+
 export function App() {
   const [activeTab, setActiveTab] = React.useState("levels");
   const [filters, setFilters] = React.useState(resetFilters);
@@ -516,6 +579,7 @@ export function App() {
           setResult={setResult}
         />
         {result > 0 && <Results activeTab={activeTab} result={result} />}
+        <Instructions />
       </div>
       <Footer />
     </>
