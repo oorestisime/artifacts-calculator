@@ -18,8 +18,8 @@ const artifactsStars = {
   legendary: [50, 100, 200, 300, 500, 1500],
 };
 
-const atkToHpMultiplier = 3;
-const atkToDefMultiplier = 5;
+const hpToAtkDivider = 3;
+const defToAtkDivider = 5;
 
 const totalUpgradeValue = ({
   infAtk,
@@ -32,11 +32,11 @@ const totalUpgradeValue = ({
   rangeDef,
   cavDef,
 }) => {
-  const atk = infAtk || 0 + rangeAtk || 0 + cavAtk || 0;
-  const hp = infHp || 0 + rangeHp || 0 + cavHp || 0;
-  const def = infDef || 0 + rangeDef || 0 + cavDef || 0;
+  const atk = (infAtk || 0) + (rangeAtk || 0) + (cavAtk || 0);
+  const hp = (infHp || 0) + (rangeHp || 0) + (cavHp || 0);
+  const def = (infDef || 0) + (rangeDef || 0) + (cavDef || 0);
 
-  return atk * atkToHpMultiplier + hp + def * atkToDefMultiplier;
+  return atk  + hp / hpToAtkDivider + def / defToAtkDivider;
 };
 
 export const resetFilters = {

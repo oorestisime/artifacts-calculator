@@ -63,7 +63,7 @@ const Header = ({ activeTab, setActiveTab, setFilters, setResult }) => {
 
 const Filters = ({ filters, setFilters, activeTab, setResult }) => {
   const [level, setLevel] = React.useState(1);
-  const [artifactType, setArtifactType] = React.useState("legendary");
+  const [artifactType, setArtifactType] = React.useState("rare");
   const isButtonDisabled = Object.values(filters).every((x) => {
     return (x || 0) === 0;
   });
@@ -288,7 +288,7 @@ const Filters = ({ filters, setFilters, activeTab, setResult }) => {
                       onChange={(e) =>
                         setFilters({
                           ...filters,
-                          cavAtk: parseFloat(e.target.value),
+                          cavHp: parseFloat(e.target.value),
                         })
                       }
                       type="number"
