@@ -32,9 +32,9 @@ const totalUpgradeValue = ({
   rangeDef,
   cavDef,
 }) => {
-  const atk = infAtk || 0 + rangeAtk || 0 + cavAtk || 0;
-  const hp = infHp || 0 + rangeHp || 0 + cavHp || 0;
-  const def = infDef || 0 + rangeDef || 0 + cavDef || 0;
+  const atk = (infAtk || 0) + (rangeAtk || 0) + (cavAtk || 0);
+  const hp = (infHp || 0) + (rangeHp || 0) + (cavHp || 0);
+  const def = (infDef || 0) + (rangeDef || 0) + (cavDef || 0);
 
   return atk  + hp / hpToAtkDivider + def / defToAtkDivider;
 };
