@@ -1,4 +1,7 @@
+import { artifactUpgrades } from "./data";
+
 const artifactsLevels = [
+  0,
   40,
   80,
   40 * 6,
@@ -52,8 +55,7 @@ export const resetFilters = {
 };
 
 export const artifactStarUpgrade = (artifactType, artifactLevel, upgrades) => {
-  console.log(artifactType, artifactLevel);
-  const stars = artifactsStars[artifactType][artifactLevel - 1];
+  const stars = artifactsStars[artifactType][artifactLevel];
   const value = totalUpgradeValue(upgrades);
   return value / stars;
 };
@@ -63,7 +65,72 @@ export const artifactsLevelUpgrade = (
   artifactLevel,
   upgrades
 ) => {
-  const books = artifactsLevels[artifactLevel - 1];
+  const books = artifactsLevels[artifactLevel];
   const value = totalUpgradeValue(upgrades);
+  console.log(value, books, value / books);
   return value / books;
+};
+
+export interface Upgrade {
+  upgradeType: "level" | "star";
+  artifactName: string;
+  upgradeStep: number;
+  value: number;
+  upgrade: {
+    infAtk: number;
+    rangeAtk: number;
+    cavAtk: number;
+    infHp: number;
+    rangeHp: number;
+    cavHp: number;
+    infDef: number;
+    rangeDef: number;
+    cavDef: number;
+  };
+}
+
+export const getUpgradeLevelValueFromData = (
+  artifact,
+  currentLevel,
+  currentStar
+): Upgrade => {
+  const upgradeKeys = Object.keys(artifactUpgrades[artifact]);
+  const upgrade = { ...resetFilters };
+  for (const key of upgradeKeys) {
+    const diff =
+      artifactUpgrades[artifact][key][currentLevel + 1][currentStar] -
+      artifactUpgrades[artifact][key][currentLevel][currentStar];
+    upgrade[key] = diff;
+  }
+  console.log(currentLevel);
+
+  return {
+    artifactName: artifact,
+    upgradeType: "level",
+    upgradeStep: currentLevel,
+    value: artifactsLevelUpgrade("", currentLevel, upgrade),
+    upgrade,
+  };
+};
+
+export const getUpgradeStarValueFromData = (
+  artifact,
+  currentLevel,
+  currentStar
+): Upgrade => {
+  const upgradeKeys = Object.keys(artifactUpgrades[artifact]);
+  const upgrade = { ...resetFilters };
+  for (const key of upgradeKeys) {
+    const diff =
+      artifactUpgrades[artifact][key][currentLevel][currentStar + 1] -
+      artifactUpgrades[artifact][key][currentLevel][currentStar];
+    upgrade[key] = diff;
+  }
+  return {
+    artifactName: artifact,
+    upgradeType: "star",
+    upgradeStep: currentStar,
+    value: artifactStarUpgrade("legendary", currentStar, upgrade),
+    upgrade,
+  };
 };

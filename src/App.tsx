@@ -4,6 +4,7 @@ import {
   artifactsLevelUpgrade,
   resetFilters,
 } from "./calculator";
+import { Full } from "./Full";
 
 const Header = ({ activeTab, setActiveTab, setFilters, setResult }) => {
   const activeTabStyles = "bg-sky-100 text-sky-700";
@@ -39,6 +40,14 @@ const Header = ({ activeTab, setActiveTab, setFilters, setResult }) => {
                     } px-3 py-2 font-medium text-sm rounded-md`}
                   >
                     Stars
+                  </button>
+                  <button
+                    onClick={() => setActiveTab("full")}
+                    className={`${
+                      activeTab === "full" ? activeTabStyles : inactiveTabStyles
+                    } px-3 py-2 font-medium text-sm rounded-md`}
+                  >
+                    Full
                   </button>
                 </nav>
               </div>
@@ -102,7 +111,7 @@ const Filters = ({ filters, setFilters, activeTab, setResult }) => {
                         onChange={(e) => setLevel(parseFloat(e.target.value))}
                         id="level"
                         name="level"
-                        className="mt-1 block w-full rounded-md border border-gray-300 bg-white py-2 px-3 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+                        className="mt-1 block w-full rounded-md border border-gray-300 bg-white py-2 px-3 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-sky-500 sm:text-sm"
                       >
                         <option value="1">1-2</option>
                         <option value="2">2-3</option>
@@ -129,7 +138,7 @@ const Filters = ({ filters, setFilters, activeTab, setResult }) => {
                         onChange={(e) => setLevel(parseFloat(e.target.value))}
                         id="star"
                         name="star"
-                        className="mt-1 block w-full rounded-md border border-gray-300 bg-white py-2 px-3 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+                        className="mt-1 block w-full rounded-md border border-gray-300 bg-white py-2 px-3 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-sky-500 sm:text-sm"
                       >
                         <option value="1">1-2</option>
                         <option value="2">2-3</option>
@@ -150,7 +159,7 @@ const Filters = ({ filters, setFilters, activeTab, setResult }) => {
                       onChange={(e) => setArtifactType(e.target.value)}
                       id="artifactType"
                       name="artifactType"
-                      className="mt-1 block w-full rounded-md border border-gray-300 bg-white py-2 px-3 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+                      className="mt-1 block w-full rounded-md border border-gray-300 bg-white py-2 px-3 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-sky-500 sm:text-sm"
                     >
                       <option value="rare">Rare (blue)</option>
                       <option value="epic">Epic (purple)</option>
@@ -559,7 +568,7 @@ const Instructions = () => {
 };
 
 export function App() {
-  const [activeTab, setActiveTab] = React.useState("levels");
+  const [activeTab, setActiveTab] = React.useState("full");
   const [filters, setFilters] = React.useState(resetFilters);
   const [result, setResult] = React.useState(0);
 
@@ -572,14 +581,20 @@ export function App() {
         setResult={setResult}
       />
       <div className="mx-auto px-12 py-12 pt-6 bg-slate-200">
-        <Filters
-          filters={filters}
-          setFilters={setFilters}
-          activeTab={activeTab}
-          setResult={setResult}
-        />
-        {result > 0 && <Results activeTab={activeTab} result={result} />}
-        <Instructions />
+        {activeTab === "full" ? (
+          <Full />
+        ) : (
+          <>
+            <Filters
+              filters={filters}
+              setFilters={setFilters}
+              activeTab={activeTab}
+              setResult={setResult}
+            />
+            {result > 0 && <Results activeTab={activeTab} result={result} />}
+            <Instructions />
+          </>
+        )}
       </div>
       <Footer />
     </>
