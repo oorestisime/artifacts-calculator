@@ -1,4 +1,4 @@
-import { artifactUpgrades } from "./data";
+import { artifactsMapRarity, artifactUpgrades } from "./data";
 
 const artifactsLevels = [
   0,
@@ -39,7 +39,7 @@ const totalUpgradeValue = ({
   const hp = (infHp || 0) + (rangeHp || 0) + (cavHp || 0);
   const def = (infDef || 0) + (rangeDef || 0) + (cavDef || 0);
 
-  return atk  + hp / hpToAtkDivider + def / defToAtkDivider;
+  return atk + hp / hpToAtkDivider + def / defToAtkDivider;
 };
 
 export const resetFilters = {
@@ -67,14 +67,13 @@ export const artifactsLevelUpgrade = (
 ) => {
   const books = artifactsLevels[artifactLevel];
   const value = totalUpgradeValue(upgrades);
-  console.log(value, books, value / books);
   return value / books;
 };
 
 export interface Upgrade {
   upgradeType: "level" | "star";
   artifactName: string;
-  upgradeStep: number;
+  upgradeStep: number | "blessed";
   value: number;
   upgrade: {
     infAtk: number;
@@ -102,7 +101,6 @@ export const getUpgradeLevelValueFromData = (
       artifactUpgrades[artifact][key][currentLevel][currentStar];
     upgrade[key] = diff;
   }
-  console.log(currentLevel);
 
   return {
     artifactName: artifact,
@@ -130,7 +128,48 @@ export const getUpgradeStarValueFromData = (
     artifactName: artifact,
     upgradeType: "star",
     upgradeStep: currentStar,
-    value: artifactStarUpgrade("legendary", currentStar, upgrade),
+    value: artifactStarUpgrade(
+      artifactsMapRarity[artifact],
+      currentStar,
+      upgrade
+    ),
     upgrade,
   };
+};
+
+export const calculateUpgradePath = (
+  currentSetup
+): { level: Upgrade[]; star: Upgrade[] } => {
+  const acc: { level: Upgrade[]; star: Upgrade[] } = { level: [], star: [] };
+  Object.values(currentSetup).forEach((value) => {
+    const { name, level, star, unlocked } = value as any;
+    if (unlocked) {
+      if (level === 12) {
+        acc.level.push({
+          upgradeType: "level",
+          artifactName: name,
+          upgradeStep: 12,
+          value: 0,
+          upgrade: { ...resetFilters },
+        });
+      } else {
+        const levelUpgrade = getUpgradeLevelValueFromData(name, level, star);
+        acc.level.push(levelUpgrade);
+      }
+      if (star === "blessed") {
+        acc.star.push({
+          upgradeType: "star",
+          artifactName: name,
+          upgradeStep: "blessed",
+          value: 0,
+          upgrade: { ...resetFilters },
+        });
+      } else {
+        const starUpgrade = getUpgradeStarValueFromData(name, level, star);
+
+        acc.star.push(starUpgrade);
+      }
+    }
+  });
+  return acc;
 };

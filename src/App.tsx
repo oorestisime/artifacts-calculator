@@ -4,7 +4,8 @@ import {
   artifactsLevelUpgrade,
   resetFilters,
 } from "./calculator";
-import { Full } from "./Full";
+import { Compare as Compare } from "./Compare";
+import { UpgradePath } from "./UpgradePath";
 
 const Header = ({ activeTab, setActiveTab, setFilters, setResult }) => {
   const activeTabStyles = "bg-sky-100 text-sky-700";
@@ -20,6 +21,27 @@ const Header = ({ activeTab, setActiveTab, setFilters, setResult }) => {
             <div className="ml-10  space-x-8">
               <div>
                 <nav className="flex space-x-4" aria-label="Tabs">
+                  <button
+                    onClick={() => setActiveTab("upgradePath")}
+                    className={`${
+                      activeTab === "upgradePath"
+                        ? activeTabStyles
+                        : inactiveTabStyles
+                    } px-3 py-2 font-medium text-sm rounded-md`}
+                  >
+                    Upgrade Path
+                  </button>
+                  <button
+                    onClick={() => setActiveTab("compare")}
+                    className={`${
+                      activeTab === "compare"
+                        ? activeTabStyles
+                        : inactiveTabStyles
+                    } px-3 py-2 font-medium text-sm rounded-md`}
+                  >
+                    Compare
+                  </button>
+
                   <button
                     onClick={() => setActiveTab("levels")}
                     className={`${
@@ -41,29 +63,23 @@ const Header = ({ activeTab, setActiveTab, setFilters, setResult }) => {
                   >
                     Stars
                   </button>
-                  <button
-                    onClick={() => setActiveTab("full")}
-                    className={`${
-                      activeTab === "full" ? activeTabStyles : inactiveTabStyles
-                    } px-3 py-2 font-medium text-sm rounded-md`}
-                  >
-                    Full
-                  </button>
                 </nav>
               </div>
             </div>
           </div>
-          <div className="ml-10 space-x-4">
-            <button
-              onClick={() => {
-                setFilters(resetFilters);
-                setResult(0);
-              }}
-              className="inline-block rounded-md border border-transparent bg-white py-2 px-4 text-base font-medium text-sky-600 hover:bg-sky-50"
-            >
-              Reset
-            </button>
-          </div>
+          {activeTab !== "compare" && (
+            <div className="ml-10 space-x-4">
+              <button
+                onClick={() => {
+                  setFilters(resetFilters);
+                  setResult(0);
+                }}
+                className="inline-block rounded-md border border-transparent bg-white py-2 px-4 text-base font-medium text-sky-600 hover:bg-sky-50"
+              >
+                Reset
+              </button>
+            </div>
+          )}
         </div>
       </nav>
     </header>
@@ -568,7 +584,7 @@ const Instructions = () => {
 };
 
 export function App() {
-  const [activeTab, setActiveTab] = React.useState("full");
+  const [activeTab, setActiveTab] = React.useState("upgradePath");
   const [filters, setFilters] = React.useState(resetFilters);
   const [result, setResult] = React.useState(0);
 
@@ -581,9 +597,9 @@ export function App() {
         setResult={setResult}
       />
       <div className="mx-auto px-12 py-12 pt-6 bg-slate-200">
-        {activeTab === "full" ? (
-          <Full />
-        ) : (
+        {activeTab === "compare" && <Compare />}
+        {activeTab === "upgradePath" && <UpgradePath />}
+        {["levels", "stars"].includes(activeTab) && (
           <>
             <Filters
               filters={filters}

@@ -1,4 +1,6 @@
 import React from "react";
+import { ArtifactLevelSelect } from "./ArtifactLevelSelect";
+import { ArtifactStarSelect } from "./ArtifactStarSelect";
 import {
   getUpgradeLevelValueFromData,
   getUpgradeStarValueFromData,
@@ -25,7 +27,7 @@ const ArtifactPicker = ({
   setData: (data: typeof initialData) => void;
 }) => {
   return (
-    <div className="col-span-6 sm:col-span-4">
+    <div className="col-span-6 mx-2">
       <h3 className="text-lg leading-6 font-medium text-gray-900">
         {artifactKeyPrefix === "artifact1" ? "Artifact 1" : "Artifact 2"}
       </h3>
@@ -56,63 +58,32 @@ const ArtifactPicker = ({
         </select>
       </div>
       <div className="py-4">
-        <label
-          htmlFor={`${artifactKeyPrefix}level`}
-          className="block text-sm font-medium text-gray-700"
-        >
-          Current Level
-        </label>
-        <select
-          value={currentData[`${artifactKeyPrefix}Level`]}
+        <ArtifactLevelSelect
+          id={`${artifactKeyPrefix}level`}
+          name={`${artifactKeyPrefix}level`}
           onChange={(e) =>
             setData({
               ...currentData,
               [`${artifactKeyPrefix}Level`]: parseFloat(e.target.value),
             })
           }
-          id={`${artifactKeyPrefix}level`}
-          name={`${artifactKeyPrefix}level`}
-          className="mt-1 block w-full rounded-md border border-gray-300 bg-white py-2 px-3 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-sky-500 sm:text-sm"
-        >
-          <option value="1">1</option>
-          <option value="2">2</option>
-          <option value="3">3</option>
-          <option value="4">4</option>
-          <option value="5">5</option>
-          <option value="6">6</option>
-          <option value="7">7</option>
-          <option value="8">8</option>
-          <option value="9">9</option>
-          <option value="10">10</option>
-          <option value="11">11</option>
-        </select>
+          label="Current Level"
+          value={currentData[`${artifactKeyPrefix}Level`]}
+        />
       </div>
       <div className="py-4">
-        <label
-          htmlFor={`${artifactKeyPrefix}star`}
-          className="block text-sm font-medium text-gray-700"
-        >
-          Current Star
-        </label>
-        <select
-          value={currentData[`${artifactKeyPrefix}Star`]}
+        <ArtifactStarSelect
+          id={`${artifactKeyPrefix}star`}
+          name={`${artifactKeyPrefix}star`}
           onChange={(e) =>
             setData({
               ...currentData,
               [`${artifactKeyPrefix}Star`]: parseFloat(e.target.value),
             })
           }
-          id={`${artifactKeyPrefix}star`}
-          name={`${artifactKeyPrefix}star`}
-          className="mt-1 block w-full rounded-md border border-gray-300 bg-white py-2 px-3 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-sky-500 sm:text-sm"
-        >
-          <option value="1">0</option>
-          <option value="1">1</option>
-          <option value="2">2</option>
-          <option value="3">3</option>
-          <option value="4">4</option>
-          <option value="5">5</option>
-        </select>
+          label="Current Star"
+          value={currentData[`${artifactKeyPrefix}Star`]}
+        />
       </div>
     </div>
   );
@@ -180,7 +151,6 @@ const ArtifactCompareResult = ({
   artifact1: Upgrade;
   artifact2: Upgrade;
 }) => {
-  console.log(artifact1, artifact2);
   const bestUpgrade = artifact1.value > artifact2.value ? artifact1 : artifact2;
   return (
     <div className="pb-4">
@@ -257,8 +227,8 @@ const Results = ({
               <div className="bg-slate-100 px-4 py-5 sm:p-6">
                 <div className="mx-auto">
                   <ArtifactCompareResult
-                    artifact1={artifact1LevelUpgradeValue}
-                    artifact2={artifact2LevelUpgradeValue}
+                    artifact1={artifact1StarUpgradeValue}
+                    artifact2={artifact2StarUpgradeValue}
                   />
                 </div>
                 <div className="mx-auto">
@@ -276,7 +246,7 @@ const Results = ({
   );
 };
 
-export const Full = () => {
+export const Compare = () => {
   const [data, setData] = React.useState(initialData);
   const [result, setResult] = React.useState<{
     artifact1LevelUpgradeValue?: Upgrade;
