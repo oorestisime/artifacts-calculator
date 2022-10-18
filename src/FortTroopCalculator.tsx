@@ -181,7 +181,7 @@ const FortCalculator = () => {
     setResult({ ...troopsCalculated.t5, ...troopsCalculated.t4 });
   };
   const totalComp = troops.infTroop + troops.rangeTroop + troops.cavTroop;
-  console.log(totalComp % 10);
+
   return (
     <div className="mt-10 sm:mt-0">
       <div className="md:grid md:grid-cols-3 md:gap-6">
