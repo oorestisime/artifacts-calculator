@@ -19,5 +19,18 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-use": "^17.4.0"
-  }
+  },
+  "description": "- https://artifacts-calculator.netlify.app",
+  "version": "1.0.0",
+  "main": "tailwind.config.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/oorestisime/artifacts-calculator.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/oorestisime/artifacts-calculator/issues"
+  },
+  "homepage": "https://github.com/oorestisime/artifacts-calculator#readme"
 }
