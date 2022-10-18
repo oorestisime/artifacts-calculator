@@ -144,27 +144,12 @@ export const calculateUpgradePath = (
   Object.values(currentSetup).forEach((value) => {
     const { name, level, star, unlocked } = value as any;
     if (unlocked) {
-      if (level === 12) {
-        acc.level.push({
-          upgradeType: "level",
-          artifactName: name,
-          upgradeStep: 12,
-          value: 0,
-          upgrade: { ...resetFilters },
-        });
-      } else {
+      if (level !== 12) {
         const levelUpgrade = getUpgradeLevelValueFromData(name, level, star);
         acc.level.push(levelUpgrade);
       }
-      if (star === "blessed") {
-        acc.star.push({
-          upgradeType: "star",
-          artifactName: name,
-          upgradeStep: "blessed",
-          value: 0,
-          upgrade: { ...resetFilters },
-        });
-      } else {
+      console.log(name, star);
+      if (star !== 6) {
         const starUpgrade = getUpgradeStarValueFromData(name, level, star);
 
         acc.star.push(starUpgrade);
