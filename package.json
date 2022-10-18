@@ -22,7 +22,6 @@
   },
   "description": "- https://artifacts-calculator.netlify.app",
   "version": "1.0.0",
-  "main": "tailwind.config.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/oorestisime/artifacts-calculator.git"
