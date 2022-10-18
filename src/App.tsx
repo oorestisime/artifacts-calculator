@@ -17,7 +17,7 @@ const Header = ({ activeTab, setActiveTab, setFilters, setResult }) => {
         <div className="flex w-full items-center justify-between border-b border-sky-500 py-6 lg:border-none">
           <div className="flex items-center">
             <a href="#" className="text-2xl text-slate-50">
-              <span>Artifacts Calculator</span>
+              <span>Lords Mobile Calculators</span>
             </a>
             <div className="ml-10  space-x-8">
               <div>
@@ -30,7 +30,7 @@ const Header = ({ activeTab, setActiveTab, setFilters, setResult }) => {
                         : inactiveTabStyles
                     } px-3 py-2 font-medium text-sm rounded-md`}
                   >
-                    Upgrade Path
+                    Artifact Upgrade Path
                   </button>
                   <button
                     onClick={() => setActiveTab("compare")}
@@ -40,7 +40,7 @@ const Header = ({ activeTab, setActiveTab, setFilters, setResult }) => {
                         : inactiveTabStyles
                     } px-3 py-2 font-medium text-sm rounded-md`}
                   >
-                    Compare
+                    Compare Artifacts
                   </button>
 
                   <button
@@ -51,7 +51,7 @@ const Header = ({ activeTab, setActiveTab, setFilters, setResult }) => {
                         : inactiveTabStyles
                     } px-3 py-2 font-medium text-sm rounded-md`}
                   >
-                    Levels
+                    Artifact Levels
                   </button>
 
                   <button
@@ -62,7 +62,7 @@ const Header = ({ activeTab, setActiveTab, setFilters, setResult }) => {
                         : inactiveTabStyles
                     } px-3 py-2 font-medium text-sm rounded-md`}
                   >
-                    Stars
+                    Artifact Stars
                   </button>
                   <button
                     onClick={() => setActiveTab("fortCalculator")}
