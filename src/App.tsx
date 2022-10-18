@@ -6,6 +6,7 @@ import {
 } from "./calculator";
 import { Compare as Compare } from "./Compare";
 import { UpgradePath } from "./UpgradePath";
+import FortCalculator from "./FortTroopCalculator";
 
 const Header = ({ activeTab, setActiveTab, setFilters, setResult }) => {
   const activeTabStyles = "bg-sky-100 text-sky-700";
@@ -62,6 +63,16 @@ const Header = ({ activeTab, setActiveTab, setFilters, setResult }) => {
                     } px-3 py-2 font-medium text-sm rounded-md`}
                   >
                     Stars
+                  </button>
+                  <button
+                    onClick={() => setActiveTab("fortCalculator")}
+                    className={`${
+                      activeTab === "fortCalculator"
+                        ? activeTabStyles
+                        : inactiveTabStyles
+                    } px-3 py-2 font-medium text-sm rounded-md`}
+                  >
+                    Fort Combo Calculator
                   </button>
                 </nav>
               </div>
@@ -599,6 +610,7 @@ export function App() {
       <div className="mx-auto px-12 py-12 pt-6 bg-slate-200">
         {activeTab === "compare" && <Compare />}
         {activeTab === "upgradePath" && <UpgradePath />}
+        {activeTab === "fortCalculator" && <FortCalculator />}
         {["levels", "stars"].includes(activeTab) && (
           <>
             <Filters
