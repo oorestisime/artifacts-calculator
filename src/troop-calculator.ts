@@ -20,9 +20,18 @@ export const troopCalculator = ({
 };
 
 export const resetTroops = {
-  infTroop: 1,
-  rangeTroop: 1,
-  cavTroop: 1,
+  infTroop: 0,
+  rangeTroop: 0,
+  cavTroop: 0,
   totalTroops: 200000,
   t5Troops: 60,
+};
+
+export const resetResult = {
+  t5inf: 0,
+  t5range: 0,
+  t5cav: 0,
+  t4inf: 0,
+  t4range: 0,
+  t4cav: 0,
 };

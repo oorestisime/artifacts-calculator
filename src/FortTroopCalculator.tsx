@@ -1,5 +1,5 @@
 import React from "react";
-import { resetTroops, troopCalculator } from "./troop-calculator";
+import { resetResult, resetTroops, troopCalculator } from "./troop-calculator";
 const Results = ({ result }) => {
   return (
     <div className="mt-10 ">
@@ -117,9 +117,9 @@ const Results = ({ result }) => {
 };
 const FortCalculator = () => {
   const [troops, setTroops] = React.useState({
-    infTroop: 1,
-    rangeTroop: 1,
-    cavTroop: 1,
+    infTroop: 0,
+    rangeTroop: 0,
+    cavTroop: 0,
     totalTroops: 200000,
     t5Troops: 60,
   });
@@ -181,6 +181,7 @@ const FortCalculator = () => {
                     value={troops.infTroop}
                     className="mt-1 block w-full rounded-md border border-gray-300 bg-white py-2 px-3 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-sky-500 sm:text-sm"
                   >
+                    <option value="0">0</option>
                     <option value="1">1</option>
                     <option value="2">2</option>
                     <option value="3">3</option>
@@ -212,6 +213,7 @@ const FortCalculator = () => {
                     value={troops.rangeTroop}
                     className="mt-1 block w-full rounded-md border border-gray-300 bg-white py-2 px-3 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-sky-500 sm:text-sm"
                   >
+                    <option value="0">0</option>
                     <option value="1">1</option>
                     <option value="2">2</option>
                     <option value="3">3</option>
@@ -243,6 +245,7 @@ const FortCalculator = () => {
                     value={troops.cavTroop}
                     className="mt-1 block w-full rounded-md border border-gray-300 bg-white py-2 px-3 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-sky-500 sm:text-sm"
                   >
+                    <option value="0">0</option>
                     <option value="1">1</option>
                     <option value="2">2</option>
                     <option value="3">3</option>
@@ -310,6 +313,7 @@ const FortCalculator = () => {
                 <button
                   onClick={() => {
                     setTroops(resetTroops);
+                    setResult(resetResult);
                   }}
                   className={`inline-flex justify-center rounded-md border border-transparent px-4 mx-2 text-base font-medium text-sky-600 hover:bg-sky-50`}
                 >
@@ -326,7 +330,9 @@ const FortCalculator = () => {
           </div>
         </div>
       </div>
-      <Results result={result} />
+      {result.t5inf + result.t5range + result.t5cav > 0 && (
+        <Results result={result} />
+      )}
     </div>
   );
 };
