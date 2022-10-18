@@ -142,6 +142,7 @@ const FortCalculator = () => {
       t4cav: troopsCalculated.t4.t4cav,
     });
   };
+  const totalComp = troops.infTroop + troops.rangeTroop + troops.cavTroop;
 
   return (
     <div className="mt-10 sm:mt-0">
@@ -310,6 +311,12 @@ const FortCalculator = () => {
                 </div>
               </div>
               <div className="bg-gray-50 px-4 py-3 text-right sm:px-6">
+                {result.t5inf === 0 && (
+                  <span className="text-slate-600 mr-4">
+                    Enter a correct comp to calculate
+                  </span>
+                )}
+
                 <button
                   onClick={() => {
                     setTroops(resetTroops);
@@ -320,6 +327,7 @@ const FortCalculator = () => {
                   Reset
                 </button>
                 <button
+                  disabled={totalComp !== 20 && totalComp !== 10}
                   onClick={calculateTroops}
                   className={`disabled:opacity-75 inline-flex justify-center rounded-md border border-transparent bg-sky-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-offset-2`}
                 >
