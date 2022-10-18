@@ -178,29 +178,22 @@ const FortCalculator = () => {
   });
   const calculateTroops = () => {
     const troopsCalculated = troopCalculator(troops);
-    setResult({
-      t5inf: troopsCalculated.t5.t5inf,
-      t5range: troopsCalculated.t5.t5range,
-      t5cav: troopsCalculated.t5.t5cav,
-      t4inf: troopsCalculated.t4.t4inf,
-      t4range: troopsCalculated.t4.t4range,
-      t4cav: troopsCalculated.t4.t4cav,
-    });
+    setResult({ ...troopsCalculated.t5, ...troopsCalculated.t4 });
   };
   const totalComp = troops.infTroop + troops.rangeTroop + troops.cavTroop;
-
+  console.log(totalComp % 10);
   return (
     <div className="mt-10 sm:mt-0">
       <div className="md:grid md:grid-cols-3 md:gap-6">
         <div className="md:col-span-1">
           <div className="px-4 sm:px-0">
             <h2 className="text-3xl font-bold tracking-tight text-gray-900">
-              Troop Calculator for Forts
+              Calculate Fort Combos
             </h2>
 
             <p className="mt-4 text-lg text-gray-500">
-              Enter the troop Comp , troops and t5 percent you want to
-              calculate!
+              Enter the troop Comb e.g 4-4-2, total number of troops and t5
+              percentage you want to calculate!
             </p>
           </div>
         </div>
@@ -356,9 +349,9 @@ const FortCalculator = () => {
                 </div>
               </div>
               <div className="bg-gray-50 px-4 py-3 text-right sm:px-6">
-                {result.t5inf === 0 && (
+                {totalComp % 10 !== 0 && (
                   <span className="text-slate-600 mr-4">
-                    Enter a correct comp to calculate
+                    Enter a correct comp to calculate!
                   </span>
                 )}
 
@@ -372,7 +365,7 @@ const FortCalculator = () => {
                   Reset
                 </button>
                 <button
-                  disabled={totalComp !== 20 && totalComp !== 10}
+                  disabled={totalComp % 10 !== 0}
                   onClick={calculateTroops}
                   className={`disabled:opacity-75 inline-flex justify-center rounded-md border border-transparent bg-sky-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-offset-2`}
                 >
@@ -383,7 +376,7 @@ const FortCalculator = () => {
           </div>
         </div>
       </div>
-      {result.t5inf + result.t5range + result.t5cav > 0 && (
+      {Object.values(result).reduce((a, b) => a + b, 0) > 0 && (
         <Results result={result} />
       )}
       <Instructions />

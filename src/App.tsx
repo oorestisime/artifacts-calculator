@@ -72,7 +72,7 @@ const Header = ({ activeTab, setActiveTab, setFilters, setResult }) => {
                         : inactiveTabStyles
                     } px-3 py-2 font-medium text-sm rounded-md`}
                   >
-                    Fort Calculator
+                    Fort Combo Calculator
                   </button>
                 </nav>
               </div>
