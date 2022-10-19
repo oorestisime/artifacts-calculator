@@ -95,7 +95,7 @@ const Results = ({ result }) => {
                       <div className="relative overflow-hidden rounded-lg bg-white px-4 py-2 shadow ">
                         <dt>
                           <p className="ml-16 truncate text-sm font-medium text-gray-500">
-                            t4 Cavalry
+                            Τ4 Cavalry
                           </p>
                         </dt>
                         <dd className="ml-16 flex items-baseline pb-2">
@@ -351,7 +351,17 @@ const FortCalculator = () => {
               <div className="bg-gray-50 px-4 py-3 text-right sm:px-6">
                 {totalComp % 10 !== 0 && (
                   <span className="text-slate-600 mr-4">
-                    Enter a correct comp to calculate!
+                    You must enter a correct comb to calculate!
+                  </span>
+                )}
+                {troops.totalTroops > 375000 && (
+                  <span className="text-slate-600 mr-4">
+                    Can only display Total Troops up to 375000!
+                  </span>
+                )}
+                {troops.t5Troops > 100 && (
+                  <span className="text-slate-600 mr-4">
+                    T5 percent cannot be more than 100%!
                   </span>
                 )}
 
@@ -365,7 +375,11 @@ const FortCalculator = () => {
                   Reset
                 </button>
                 <button
-                  disabled={totalComp % 10 !== 0}
+                  disabled={
+                    totalComp % 10 !== 0 ||
+                    troops.totalTroops > 375000 ||
+                    troops.t5Troops > 100
+                  }
                   onClick={calculateTroops}
                   className={`disabled:opacity-75 inline-flex justify-center rounded-md border border-transparent bg-sky-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-offset-2`}
                 >
